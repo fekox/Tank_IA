@@ -2,7 +2,7 @@
 
 public class Tank : TankBase
 {
-    float fitness = 0;
+    public float fitness = 0;
     protected override void OnReset()
     {
         fitness = 1;
@@ -24,7 +24,16 @@ public class Tank : TankBase
 
     protected override void OnTakeMine(GameObject mine)
     {
-        fitness *= 2;
-        genome.fitness = fitness;
+        if (mine.GetComponent<Mine>().isGood)
+        {
+            fitness *= 2f;
+            genome.fitness = fitness;
+        }
+
+        else 
+        {
+            fitness *= 0.3f;
+            genome.fitness = fitness;
+        }
     }
 }

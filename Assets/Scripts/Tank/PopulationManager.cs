@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class PopulationManager : MonoBehaviour
 {
@@ -234,7 +235,9 @@ public class PopulationManager : MonoBehaviour
             foreach (Tank t in populationGOs)
             {
                 // Get the nearest mine
-                GameObject mine = GetNearestMine(t.transform.position);
+                GameObject mine = new GameObject(); 
+                
+                mine = GetNearestMine(t.transform.position);
 
                 // Set the nearest mine to current tank
                 t.SetNearestMine(mine);
@@ -317,27 +320,31 @@ public class PopulationManager : MonoBehaviour
         for (int i = 0; i < MinesCount; i++)
         {
             Vector3 position = GetRandomPos();
-            GameObject go = Instantiate<GameObject>(MinePrefab, position, Quaternion.identity);
+
+            GameObject mine = Instantiate<GameObject>(MinePrefab, position, Quaternion.identity);
 
             bool good = Random.Range(-1.0f, 1.0f) >= 0;
 
-            SetMineGood(good, go);
+            SetMineGood(good, mine);
 
-            mines.Add(go);
+            mines.Add(mine);
         }
     }
 
-    void SetMineGood(bool good, GameObject go)
+    void SetMineGood(bool good, GameObject mine)
     {
         if (good)
         {
-            go.GetComponent<Renderer>().material.color = Color.green;
-            goodMines.Add(go);
+            mine.GetComponent<Mine>().isGood = true;
+            mine.GetComponent<Renderer>().material.color = Color.green;
+            goodMines.Add(mine);
         }
+
         else
         {
-            go.GetComponent<Renderer>().material.color = Color.red;
-            badMines.Add(go);
+            mine.GetComponent<Mine>().isGood = false;
+            mine.GetComponent<Renderer>().material.color = Color.red;
+            badMines.Add(mine);
         }
 
     }
