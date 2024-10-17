@@ -10,12 +10,15 @@ public class Tank : TankBase
 
     protected override void OnThink(float dt)
     {
-        Vector3 dirToMine = GetDirToMine(nearMine);
+        Vector3 dirToMine = GetDirToMine(goodMine);
+        Vector3 dirToBadMine = GetDirToMine(badMine);
 
         inputs[0] = dirToMine.x;
         inputs[1] = dirToMine.z;
-        inputs[2] = transform.forward.x;
-        inputs[3] = transform.forward.z;
+        inputs[2] = dirToBadMine.x;
+        inputs[3] = dirToBadMine.z;
+        inputs[4] = transform.forward.x;
+        inputs[5] = transform.forward.z;
 
         float[] output = brain.Synapsis(inputs);
 
@@ -24,16 +27,25 @@ public class Tank : TankBase
 
     protected override void OnTakeMine(GameObject mine)
     {
-        if (mine.GetComponent<Mine>().isGood)
+        const int reward = 10;
+        const float punishment = 0.89f;
+
+        if (IsGoodMine(mine))
         {
-            fitness *= 2f;
-            genome.fitness = fitness;
+            IncreaseFitnessMod();
+            
+            if (fitnessMult > maxFitness) 
+                fitnessMult = maxFitness;
+
+            fitness += reward * fitnessMult;
+            badMinesCount = 0;
         }
 
-        else 
+        else
         {
-            fitness *= 0.3f;
-            genome.fitness = fitness;
+            DecreaseFitnessMod();
+            fitness *= punishment * fitnessMult;
+            badMinesCount++;
         }
     }
 }
