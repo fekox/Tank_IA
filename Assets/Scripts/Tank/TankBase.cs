@@ -14,7 +14,7 @@ public class TankBase : MonoBehaviour
     protected float[] inputs;
 
     protected float fitnessMult = 1;
-    public float maxFitness = 2;
+    public float maxFitness = 1.9f;
 
     protected int badMinesCount = 0;
 
@@ -81,10 +81,10 @@ public class TankBase : MonoBehaviour
 
 	public void Think(float dt) 
 	{
-        const int maxBadMines = 10;
+        const int maxBadMines = 1;
         const float punishment = 0.9f;
-        const float reward = 1.5f;
-        const int maxTurns = 25;
+        const float reward = 1.1f;
+        const int maxTurns = 40;
 
         OnThink(dt);
 
