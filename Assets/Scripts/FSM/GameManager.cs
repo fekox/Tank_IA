@@ -36,47 +36,5 @@ public enum Flags
 
 public class GameManager : MonoBehaviour
 {
-    [Header("Miner")]
-    public Agent minerAgent;
 
-    [Header("Caravan")]
-    public Agent caravanAgent;
-
-    private bool isButtonAlarmActive = false;
-
-    public Image button;
-
-    public void StartLoop()
-    {
-        minerAgent.SetIsStartLoop(true);
-        caravanAgent.SetIsStartLoop(true);
-    }
-
-    public void Alarm() 
-    {
-        isButtonAlarmActive =  !isButtonAlarmActive;
-
-        minerAgent.SetIsAlarmActive(isButtonAlarmActive);
-        caravanAgent.SetIsAlarmActive(isButtonAlarmActive);
-
-        if (isButtonAlarmActive) 
-        {
-            button.color = Color.red;
-        }
-
-        else 
-        {
-            button.color = Color.white;
-        }
-    }
-
-    public Agent GetMinerAgent() 
-    {
-        return minerAgent;
-    }
-
-    public Agent GetCaravanAgent() 
-    {
-        return caravanAgent;
-    }
 }
