@@ -27,7 +27,7 @@ public class Tank : TankBase
 
     protected override void OnTakeMine(GameObject mine)
     {
-        const int reward = 10;
+        const int reward = 15;
         const float punishment = 0.89f;
 
         if (IsGoodMine(mine))
