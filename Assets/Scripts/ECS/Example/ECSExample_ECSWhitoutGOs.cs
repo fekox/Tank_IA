@@ -50,6 +50,7 @@ public class ECSExample_ECSWhitoutGOs : MonoBehaviour
             drawMatrix.Add(new Matrix4x4[meshes > MAX_OBJS_PER_DRAWCALL ? MAX_OBJS_PER_DRAWCALL : meshes]);
             meshes -= MAX_OBJS_PER_DRAWCALL;
         }
+
         Parallel.For(0, entities.Count, i =>
         {
             PositionComponent position = ECSManager.GetComponent<PositionComponent>(entities[i]);
