@@ -2,9 +2,9 @@ using System.Collections.Generic;
 
 public class LayerComponent : ECSComponent
 {
-    List<uint> layers;
+    List<NeuronLayer> layers;
 
-    public LayerComponent(List<uint> newLayerList)
+    public LayerComponent(List<NeuronLayer> newLayerList)
     {
         layers = newLayerList;
     }
