@@ -5,11 +5,8 @@ using UnityEngine;
 //TODO: El ECS no debe ser solo para NeuronalNetwork, debe ser para toda la entidad.
 //TODO: Combinar el PopulationManager con el ECS para crear entidades con cerebro, layers y neuronas.
 
-public class NeuronalNetwork_ECS : MonoBehaviour
+public class Entities_ECS : MonoBehaviour
 {
-    //TODO: Dos listas de ints para las neuronas y las layers.
-    //TODO: Dos componentes para las neuronas y las layers.
-
     public int entityCount = 100;
     //public float velocity = 0.1f;
     public GameObject prefab;
@@ -21,6 +18,9 @@ public class NeuronalNetwork_ECS : MonoBehaviour
 
     private List<uint> entities;
 
+    private List<uint> neurons;
+    private List<uint> layers;
+
 
 
     void Start()
@@ -31,7 +31,8 @@ public class NeuronalNetwork_ECS : MonoBehaviour
         for (int i = 0; i < entityCount; i++)
         {
             uint entityID = ECSManager.CreateEntity();
-            ECSManager.AddComponent<NeuronalNetworkComponent>(entityID, new NeuronalNetworkComponent());
+            ECSManager.AddComponent<LayerComponent>(entityID, new LayerComponent(layers));
+            ECSManager.AddComponent<NeuronComponent>(entityID, new NeuronComponent(neurons));
 
 
             //ECSManager.AddComponent<PositionComponent>(entityID,
@@ -65,7 +66,9 @@ public class NeuronalNetwork_ECS : MonoBehaviour
 
         Parallel.For(0, entities.Count, i =>
         {
-            NeuronalNetworkComponent NNcomponent = ECSManager.GetComponent<NeuronalNetworkComponent>(entities[i]);
+            LayerComponent layerComponent = ECSManager.GetComponent<LayerComponent>(entities[i]);
+            NeuronComponent neuronComponent = ECSManager.GetComponent<NeuronComponent>(entities[i]);
+
             //PositionComponent position = ECSManager.GetComponent<PositionComponent>(entities[i]);
             //RotationComponent rotation = ECSManager.GetComponent<RotationComponent>(entities[i]);
 
